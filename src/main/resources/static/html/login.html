@@ -2,47 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Salesforce Validation Manager</title>
+	<title>Salesforce Validation Manager</title>
 
-    <link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
 
-  <nav>
-	
-	<div class="logo">
-		
-	Salesforce Validation Login
-	</div>
-	
-  </nav>
-	
+	<nav>
+
+		<div class="logo">
+
+			Salesforce Validation Login
+		</div>
+
+	</nav>
+
 	<section class="container">
-		
-	<div class="login">
-		
-		<img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg"
-		alt="Saleforce logo"
-		class="sale-image">
-		
-		<h1> Welcome </h1>
-		
-		<p>Login with salesforce to manage validation rules</p>
-		
-		<button onclick="login()"> Login with salesforce</button>
-	</div>
+
+		<div class="login">
+
+			<img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Saleforce logo"
+				class="sale-image">
+
+			<h1> Welcome </h1>
+
+			<p>Login with salesforce to manage validation rules</p>
+
+			<button onclick="login()"> Login with salesforce</button>
+		</div>
 	</section>
-  
-    <script>
-		function login(){
-			
-			window.location.href="http://localhost:8080/salesforce-login";
-			
-			}
+
+	<script>
+		function login() {
+
+			window.location.href = "/salesforce-login";
+
+		}
 	</script>
 
 </body>
