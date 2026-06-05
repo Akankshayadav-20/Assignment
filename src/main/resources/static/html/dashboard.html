@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<head>
+	
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Dashboard</title>
+	
+	<link rel="stylesheet" href="../css/dash.css">
+</head>
+
+<body>
+	
+	<nav>
+		
+		<div class="head">
+			Salesforce Validation dashboard
+		</div>
+	
+	</nav>
+	
+	<section class="container">
+		
+		<div class="user">
+			
+			<h3>Logged In User</h3>
+			
+				<p>
+					Username: <span id="username">Loding...</span>
+				</p>
+							
+				<p>
+					Organization: <span id="organization">Loding...</span>
+				</p>
+				
+				<div class="button">
+												
+					<button class="btn-get" onclick="getMetadata()">Get Metadata</button>
+																	
+					<button class="btn-log" onclick="logout()">Logout</button>
+																	
+				</div>
+		   </div>
+	  
+		</section>
+		
+		 <script src="../js/dash.js"></script>  
+	
+</body>
+</html>
+

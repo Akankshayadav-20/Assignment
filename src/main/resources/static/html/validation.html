@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Salesforce Validation Rules</title>
+
+    <link rel="stylesheet" href="../css/validation.css">
+</head>
+
+<body>
+	 
+	<nav>
+		
+		<div>
+			Salesforce Validation Rules
+		</div>
+	</nav>
+	
+	<section class="container">
+		
+		<div class="head">
+			
+			<h2>Validation Rules</h2>
+			
+			<div class="top-bar">
+
+			<div class="user-info">
+				<p>Logged In User:
+					<span id="username">Loding...</span>
+				</p>
+			</div>
+			
+			<div class="actions">
+			
+			<button class="enableAll" onclick="enableAll()">Enable All</button>
+			
+			<button class="disableAll" onclick="disableAll()">Disable All</button>
+			
+			<button class="deployBtn" onclick="deployChanges()">Deploy Changes</button>
+			</div>
+			
+		</div>	
+			<table>
+				<thead>
+					<tr>
+						<th>Rule Name</th>
+						<th>Object</th>
+						<th>Status</th>
+						<th>Action</th>
+						<th>View</th>
+					</tr>
+				</thead>
+				
+				<tbody id="rulesTable">
+				
+				</tbody>
+			</table>
+			
+			<button class="back" onclick="goBack()">Back</button>
+		</div>
+	</section>
+	<script src="../js/Validation.js"></script>  
+</body>
+</html>
