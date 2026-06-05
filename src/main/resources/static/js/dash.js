@@ -1,24 +1,37 @@
 //to get meta data
 
-fetch("/user").then(res => res.json()).then(user => {
-	
-	document.getElementById("username").innerText = user.username;
-	
-	document.getElementById("organization").innerText = user.organization_id;
+fetch(window.location.origin + "/user")
+	.then(res => {
 
-  });
+		if (!res.ok) {
+			window.location.href = "/login";
+			return;
 
+		}
 
-function getMetadata(){
-	window.location.href= "/validation";
+		return res.json();
+	}).then(user => {
+		if (!user) return;
+
+		document.getElementById("username").innerText = user.username;
+
+		document.getElementById("organization").innerText = user.organization_id;
+
+	}).catch(err => {
+		console.error(err);
+		window.location.href = "/login";
+	});
+
+function getMetadata() {
+	window.location.href = "/validation";
 }
 
-function logout(){
+function logout() {
 	fetch("/logout").then(res => res.text())
-	                .then((msg)=>{
-						alert(msg)
-						window.location.href="/login";
-					
-	}).catch(err => console.error(err));
-						
+		.then((msg) => {
+			alert(msg)
+			window.location.href = "/login";
+
+		}).catch(err => console.error(err));
+
 }
