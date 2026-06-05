@@ -68,6 +68,7 @@ public class AuthController {
 	@GetMapping("/salesforce-login")
 	public void login(HttpServletResponse response) throws Exception {
 
+		String encodedredirectUri = URLEncoder.encode(redirectUri, StandardCharsets.UTF_8);
 		String url = "https://login.salesforce.com/services/oauth2/authorize"
 				+ "?response_type=code"
 				+ "&client_id=" + clientId
