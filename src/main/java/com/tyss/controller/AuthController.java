@@ -82,9 +82,26 @@ public class AuthController {
 
 	@GetMapping("/callback")
 	// @ResponseBody
-	public String callback(@RequestParam String code) {
+	public String callback(@RequestParam(required=false) String code,
+			               @RequestParam(required=false) String error,
+			               @RequestParam(required=false) String error_description) {
 
-		System.out.println("Authorization Code = " + code);
+		
+		System.out.println(" Code = " + code);
+		System.out.println("Error = " + error);
+		System.out.println("Description= " + error_description);
+		
+		if(error != null) {
+			System.out.println("Salesforce Oauth Error = " + error);
+			return "redirect:/login";
+		}
+		
+		if(code == null) {
+			System.out.println("Authorization code not received ");
+			return "redirect:/login";
+		}
+		
+		System.out.println("Authorization code  " + code);
 
 		salesforceService.getAccessToken(code);
 
