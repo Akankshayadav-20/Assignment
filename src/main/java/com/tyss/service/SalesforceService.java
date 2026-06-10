@@ -23,16 +23,20 @@ import com.tyss.dto.ValidationResponseDTO;
 import com.tyss.dto.ValidationRuleDetailsDTO;
 import com.tyss.dto.ValidationRuleRecordDTO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class SalesforceService {
 
+	@Autowired
+	private HttpSession session;
 
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	private TokenDTO currentToken;
-	
-	private UserDTO currentUser;
+//	private TokenDTO currentToken;
+//	
+//	private UserDTO currentUser;
 	
 	@Value("${salesforce.client.id}")
 	private String clientId;
@@ -43,15 +47,29 @@ public class SalesforceService {
 	@Value("${salesforce.redirect.uri}")
 	private String redirectUri;
 	
-	public UserDTO getCurrentUser() {
-		return currentUser;
+	private TokenDTO getCurrentToken() {
+		
+		TokenDTO token = (TokenDTO)session.getAttribute("token");
+		
+		if(token==null) {
+			throw new RuntimeException("Please login first");
+		}
+		return token;
 	}
+	
+	private UserDTO getCurrentUserSession() {
+		return (UserDTO) session.getAttribute("user");
+	}
+	
+	public UserDTO getCurrentUser() { 
+		
+		return getCurrentUserSession(); }
 	
 	private HttpHeaders getHeaders() {
 		
 		HttpHeaders headers = new HttpHeaders();
 		
-		headers.setBearerAuth(currentToken.getAccess_token());
+		headers.setBearerAuth(getCurrentToken().getAccess_token());
 		
 		return headers;
 	}
@@ -107,8 +125,8 @@ public class SalesforceService {
 					         tokenUrl,
 					         request,
 					         TokenDTO.class);
-			
-			this.currentToken = token;
+		
+			session.setAttribute("token", token);
 			
 			System.out.println("Access Token " +token.getAccess_token());
 			System.out.println("Instance URL" + token.getInstance_url());
@@ -124,7 +142,7 @@ public class SalesforceService {
 					                                                      userRequest,
 					                                                      UserDTO.class);
 			UserDTO user = userResponse.getBody();
-			this.currentUser = user;
+			session.setAttribute("user", user);
 			
 			System.out.println("Username: " + user.getUsername());
 			System.out.println("Organization : " + user.getOrganization_id());
@@ -143,11 +161,11 @@ public class SalesforceService {
 		
 		try {
 			
-			System.out.println("CurrentToken =" + currentToken);
+			System.out.println("CurrentToken =" + getCurrentToken());
 			
 			String query = "SELECT Id, ValidationName, Active FROM ValidationRule";
 			
-			String url = currentToken.getInstance_url()
+			String url = getCurrentToken().getInstance_url()
 					     + "/services/data/v63.0/tooling/query?q="
 					     + query.replace(" ", "+");
 
@@ -164,7 +182,7 @@ public class SalesforceService {
 	public String toggleValidationRule(String id, Boolean active) {
 		
 		try {
-			String url = currentToken.getInstance_url()
+			String url = getCurrentToken().getInstance_url()
 					     + "/services/data/v63.0/tooling/sobjects/ValidationRule/" + id;
 			
 			boolean newStatus = !active;
@@ -215,7 +233,7 @@ public class SalesforceService {
 		
 		try {
 			
-			String url = currentToken.getInstance_url()
+			String url = getCurrentToken().getInstance_url()
 					 + "/services/data/v63.0/tooling/sobjects/ValidationRule/" + id;
 			
 			
@@ -263,8 +281,7 @@ public class SalesforceService {
 	}
 	
 	public String logout() {
-		 this.currentToken = null;
-		 this.currentUser = null;
+		session.invalidate();
 		 return "Logged out successfully";
 	}
 }
